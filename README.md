@@ -26,7 +26,7 @@
 
 ## Contribution Graph
 
-[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=darkhorse0204&theme=tokyo-night)]
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=darkhorse0204&theme=tokyo-night)
 
 ---
 
