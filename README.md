@@ -1,5 +1,3 @@
-![Metrics](https://github.com/darkhorse0204/darkhorse0204/blob/main/github-metrics.svg)
-
 # Hi, I'm Ansh Jerath
 
 ## About Me
