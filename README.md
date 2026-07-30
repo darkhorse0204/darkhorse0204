@@ -1,63 +1,37 @@
-## Ansh Jerath
+## hey, I'm Ansh
 
-Final-year CS student at VIT Vellore. I build systems where AI does the decision-support work but arithmetic and physics do the actual deciding.
-
----
+I'm a final year IT student at VIT Vellore. I like building systems where AI handles the fuzzy decision support while physics and hard math make the actual calls.
 
 ### What I'm working on
 
-Finishing **Samsung PRISM Worklet** — a cost-aware framework for detecting synthetic data (AI-generated text, images, audio, video) in data acquisition pipelines. The text detector is complete (95.3% accuracy / 92.84% F1 on HC3). The four-modality fusion engine is running; the accuracy KPI is currently gated on acquiring a labeled validation dataset. The project status doc is updated as things change and doesn't claim more than what's been measured.
+Right now I'm wrapping up a cost aware framework for Samsung PRISM that detects AI generated text, images, audio, and video in data pipelines. The text detector is already done and hits about 95% accuracy on HC3. The fusion engine for all four modalities is running too, just waiting on a good labeled dataset to get the final benchmark numbers. I'm keeping the project status doc updated with what's actually measured instead of making wild claims.
 
-Also in the research phase for **CAPS-FCL**, a contamination-aware waste segregation system combining computer vision, IoT sensor fusion, and federated learning. I'm currently in the literature phase — having systematically reviewed 30 papers (DOIs cross-referenced and verified) and searched 22 prior-art patents — establishing the theoretical foundation and identifying novelty gaps before writing the first line of code.
-
----
+I'm also doing some early research for CAPS-FCL. It's a waste segregation system using computer vision, IoT sensor fusion, and federated learning. I've been reading through a ton of literature and patents to figure out what's actually novel before I start writing code.
 
 ### Selected projects
 
-**[AirWatch India](https://github.com/arnav-rishi/Airwatch-ET)** — Built for the ET AI Hackathon 2026. The problem: given live pollution hotspot data, which specific facility should an inspector visit today?
+**[AirWatch India](https://github.com/arnav-rishi/Airwatch-ET)** 
+I built this for the ET AI Hackathon 2026. The goal was to take live pollution hotspot data and figure out exactly which facility an inspector should visit that day.
 
-The answer can't come from an LLM guessing a zone name. So the system maintains a registry of 7,900+ registered emission sources — industries, construction sites, diesel fleet depots, waste sites — with real coordinates across 82 Indian cities, seeded from OpenStreetMap via the Overpass API. Each source is scored against the hotspot on five components: proximity, atmospheric transport (Gaussian plume dispersion with Briggs urban σ curves and Pasquill-Gifford stability class derived from live wind and insolation), source-category match, dispatchability, and hotspot severity. The LLM is called last — handed a ranked shortlist with component scores it cannot change — and writes the dispatch narrative. Signal to dispatch-ready in 30–60 seconds. For a Delhi hotspot, the system narrows a 213-source search space to 5 candidates (42.6×).
+I didn't want to just ask an LLM to guess a zone name. So the system keeps a registry of over 7,900 emission sources across 82 Indian cities using OpenStreetMap data. It scores each source against the hotspot based on proximity, atmospheric transport (using a Gaussian plume dispersion model with live wind data), category match, and a few other things. The LLM only comes in at the very end to write a dispatch narrative based on a ranked list it isn't allowed to change. It takes about 30 to 60 seconds to go from signal to a dispatch ready report.
 
-Worth mentioning: mid-build we discovered 80 of 84 WAQI city feeds were serving stale data — one was 1,710 days old. Those readings were driving the enforcement ranking. Switched to OpenAQ v3 (timestamped, CPCB scale), added staleness gating at three layers, and the API now returns an honest 503 when nothing is fresh rather than fabricating urgency from a 2021 signal. The demo numbers look less dramatic; the data is real.
+One fun thing: while building it we realized 80 out of 84 WAQI city feeds were serving super stale data. One of them was almost five years old. We ended up switching to OpenAQ v3, adding strict staleness checks, and making the API fail honestly instead of faking urgency with old data. The demo numbers look less crazy now but at least they are real.
 
-`FastAPI` `Python 3.11` `React` `Tailwind CSS v4` `Leaflet.js` `Azure OpenAI` `OpenAQ v3` `NASA FIRMS` `OpenStreetMap` · 162 tests · GitHub Actions CI
+**[Eco-Loop Building Agent](https://github.com/darkhorse0204/eco-loop)** 
+This was for the Honeywell Eco-Loop hackathon. It uses a local Llama 3.1 8B model to control EnergyPlus, which is a building physics simulator. Every 15 minutes the model checks the building sensors like temperature, CO2, and occupancy, along with electricity prices. Then it sets the HVAC setpoints. There is a hard safety guardrail that keeps the AI's choices within a strict comfort band so things don't go off the rails.
 
----
-
-**[Eco-Loop Building Agent](https://github.com/darkhorse0204/eco-loop)** — Built for the Honeywell Eco-Loop hackathon. EnergyPlus (the building physics simulator used by real engineers) controlled in a live closed loop by Llama 3.1 8B running locally via Ollama. Every 15 minutes the model reads the building's sensors — zone temperatures, CO₂, occupancy, outdoor conditions, current electricity price and grid carbon intensity — and calls `set_hvac_setpoints(cooling, heating, reason)`. A hard guardrail clamps its output to the comfort band before anything reaches EnergyPlus, so comfort is safe regardless of what the model says.
-
-Two-week simulated Tampa office run: AC electricity −15.1%, cooling energy −22.2%, bill −8.7% (more than the energy saving — the AI saves roughly twice as much during the expensive 4–9pm peak as off-peak), carbon −6.4%. Comfort (PMV) and CO₂ both held at 100% throughout. Verified against a hand-tuned rule controller in an ablation study: the LLM wins on every metric, about 45% more total savings. ~1,000 decision points became 171 actual LLM calls via regime-based caching. The fallback controller ran without issue when the AI stalled once during testing.
-
-Building controls are also exposed as 6 MCP tools for anything that wants to plug in a different agent.
-
-`Python` `EnergyPlus 25.1.0 Runtime API` `Ollama (Llama 3.1 8B)` `Streamlit` `MCP`
-
----
+In a two week simulated run for a Tampa office, it cut cooling energy by 22% and the total bill by about 9%. It actually saves more money than energy because the AI learns to cut back during peak pricing hours. Comfort and CO2 levels stayed perfect the whole time. I compared it to a hand tuned rule controller and the LLM saved about 45% more overall. The controls are also exposed as MCP tools in case someone wants to plug in a different agent.
 
 **[Enterprise AI Copilot for Google Sheets](https://github.com/darkhorse0204/sheets-ai-pipeline)** 
+This is a production grade AI copilot built natively on Google Apps Script and Gemini. Instead of just a basic chat interface, it runs requests through a strict pipeline: Context Builder to Planner to User Approval to 7 Specialist Agents to a 4 layer Formula Verification.
 
-A production-grade AI copilot built entirely on Google Apps Script and Gemini. Instead of a naive chat wrapper, requests run through a strict layered pipeline: Context Builder → Planner → User Approval Workflow → 7 Specialist Agents (via ReAct loops) → 4-layer Formula Verification.
+It scans the spreadsheet's schema to build deep context and plans out the steps. The user has to approve the plan in the sidebar before it executes. I also built an enterprise module that handles rate limiting, cost tracking, and dry runs, plus a full undo stack so it's safe to use. If a formula fails, the verifier automatically catches the error trace and prompts Gemini to fix it.
 
-The system builds "deep context" by analyzing the active spreadsheet's schema and formatting before generating a structured plan. The planner's output is blocked on user approval in the custom HTML/CSS sidebar. If approved, a Step Executor dispatches tasks to the specialized agents. Critically, it includes an Enterprise module that handles rate limiting, cost tracking, a dry-run capability, and a full undo stack for safe transactions. If a generated formula fails the 4-layer verification, the verifier automatically constructs a retry prompt with the error trace and sends it back to the Gemini API.
+### Tech stack
 
-`JavaScript` `Google Apps Script` `Gemini API` `HTML/CSS`
-
----
-
-### Tech
-
-Python for most things — FastAPI for APIs, NumPy/scikit-learn for classical ML, PyTorch when there's a model. React + TypeScript (Vite, Tailwind CSS) when there's a frontend. Azure OpenAI and Ollama depending on whether the system needs to run offline. MCP when tools need a standard interface.
-
-Testing with pytest. GitHub Actions for CI. Leaflet.js for geospatial work. EnergyPlus for building physics.
-
----
-
-### Stats
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=darkhorse0204&show_icons=true&hide_border=true&count_private=true&theme=github_dark)
-
----
+I mostly use Python with FastAPI for backend stuff, and PyTorch or scikit-learn when working with models. For the frontend I usually go with React, TypeScript, Vite, and Tailwind. I use Azure OpenAI or Ollama depending on if it needs to run locally, and MCP for tool interfaces. 
 
 ### Contact
 
-[LinkedIn](https://www.linkedin.com/in/ansh-jerath-a25412214) · jerathansh@gmail.com
+[LinkedIn](https://www.linkedin.com/in/ansh-jerath-a25412214)
+Email: jerathansh@gmail.com
