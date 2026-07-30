@@ -3,7 +3,7 @@
 I'm a final year CS student at VIT Vellore. I like building systems where AI handles the fuzzy decision support while physics and hard math make the actual calls.
 
 ### What I'm working on
-* **Samsung PRISM :** Wrapping up a multimodal framework to detect AI generated content. The text detector hits 95% accuracy on HC3.
+* **Samsung PRISM :** Wrapping up a multimodal framework to detect AI generated content. The text detector hits 95% accuracy.
 * **CAPS-FCL:** Early research phase for an IoT and computer vision waste segregation system.
 
 ### Selected projects
