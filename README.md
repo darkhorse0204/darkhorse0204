@@ -1,6 +1,6 @@
-## hey, I'm Ansh
+## Hey, I'm Ansh
 
-I'm a final year CS student at VIT Vellore. I like building systems where AI handles the fuzzy decision support while physics and hard math make the actual calls.
+I'm a final year IT student at VIT Vellore. I like building systems where AI handles the fuzzy decision support while physics and hard math make the actual calls.
 
 ### What I'm working on
 * **Samsung PRISM :** Wrapping up a multimodal framework to detect AI generated content. The text detector hits 95% accuracy.
